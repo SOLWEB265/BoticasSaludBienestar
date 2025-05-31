@@ -6,10 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $correo = $_POST['correo'];
   $contrasena = $_POST['contrasena'];
 
-  // Conexión a la base de datos
   $servername = "localhost";
-  $username = "root";  // Usuario por defecto de XAMPP
-  $password = "";      // Contraseña por defecto (vacía)
+  $username = "root";
+  $password = "";
   $dbname = "botica";
 
   $conn = new mysqli($servername, $username, $password, $dbname);
@@ -18,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     die("Conexión fallida: " . $conn->connect_error);
   }
 
-  // Consulta para verificar credenciales
   $sql = "SELECT id, nombre, contrasena FROM usuarios WHERE correo = ?";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $correo);
@@ -30,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($contrasena === $row['contrasena']) {
       $_SESSION['user_id'] = $row['id'];
       $_SESSION['user_name'] = $row['nombre'];
-      header("Location: interfaz.html");  // Redirigir al dashboard
+      header("Location: interfaz.html");
       exit();
     } else {
       $error = "Contraseña incorrecta.";

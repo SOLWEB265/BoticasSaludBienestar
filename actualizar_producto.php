@@ -1,13 +1,11 @@
 <?php
 header('Content-Type: application/json');
 
-// Configuración de la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "botica";
 
-// Obtener los datos enviados
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (empty($data)) {
@@ -16,11 +14,9 @@ if (empty($data)) {
 }
 
 try {
-    // Conexión a la base de datos
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Preparar la consulta SQL
     $stmt = $conn->prepare("UPDATE productos SET 
                           producto = :producto,
                           stock = :stock,
@@ -29,7 +25,6 @@ try {
                           fecha_vencimiento = :fecha_vencimiento
                           WHERE codigo = :codigo");
 
-    // Bind parameters
     $stmt->bindParam(':codigo', $data['codigo']);
     $stmt->bindParam(':producto', $data['producto']);
     $stmt->bindParam(':stock', $data['stock'], PDO::PARAM_INT);
@@ -37,7 +32,6 @@ try {
     $stmt->bindParam(':proveedor', $data['proveedor']);
     $stmt->bindParam(':fecha_vencimiento', $data['fecha_vencimiento']);
 
-    // Ejecutar la consulta
     if ($stmt->execute()) {
         $affected_rows = $stmt->rowCount();
         if ($affected_rows > 0) {

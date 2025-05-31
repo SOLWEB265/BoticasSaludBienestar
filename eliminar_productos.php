@@ -1,13 +1,11 @@
 <?php
 header('Content-Type: application/json');
 
-// Configuración de la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "botica";
 
-// Obtener los datos enviados
 $data = json_decode(file_get_contents('php://input'), true);
 $codigos = $data['codigos'] ?? [];
 
@@ -17,14 +15,12 @@ if (empty($codigos)) {
 }
 
 try {
-    // Conexión a la base de datos
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
         throw new Exception("Conexión fallida: " . $conn->connect_error);
     }
 
-    // Preparar la consulta
     $placeholders = implode(',', array_fill(0, count($codigos), '?'));
     $sql = "DELETE FROM productos WHERE codigo IN ($placeholders)";
 
@@ -33,11 +29,9 @@ try {
         throw new Exception("Error al preparar la consulta: " . $conn->error);
     }
 
-    // Tipos de parámetros (todos son strings)
     $types = str_repeat('s', count($codigos));
     $stmt->bind_param($types, ...$codigos);
 
-    // Ejecutar la consulta
     if ($stmt->execute()) {
         $affected_rows = $stmt->affected_rows;
         echo json_encode([

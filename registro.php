@@ -11,9 +11,7 @@
 <body class="flex items-center justify-center min-h-screen bg-gradient-to-bl from-[#505b96] to-[#1d2332]">
 
   <?php
-  // Procesar el formulario cuando se envía
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Conexión a la base de datos
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -23,14 +21,11 @@
       $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
       $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      // Preparar la consulta SQL
       $stmt = $conn->prepare("INSERT INTO productos (codigo, producto, stock, precio, proveedor, fecha_vencimiento) 
                                VALUES (:codigo, :producto, :stock, :precio, :proveedor, :fecha_vencimiento)");
 
-      // El input type="date" ya envía la fecha en formato YYYY-MM-DD
       $fecha_mysql = $_POST['fecha_vencimiento'];
 
-      // Bind parameters
       $stmt->bindParam(':codigo', $_POST['codigo']);
       $stmt->bindParam(':producto', $_POST['producto']);
       $stmt->bindParam(':stock', $_POST['cantidad'], PDO::PARAM_INT);
@@ -38,10 +33,8 @@
       $stmt->bindParam(':proveedor', $_POST['proveedor']);
       $stmt->bindParam(':fecha_vencimiento', $fecha_mysql);
 
-      // Ejecutar la consulta
       $stmt->execute();
 
-      // Redirigir al inventario con mensaje de éxito
       header("Location: inventario.php?success=1");
       exit();
     } catch (PDOException $e) {

@@ -12,7 +12,6 @@ if ($conn->connect_error) {
     echo "¡Conexión exitosa a la base de datos 'botica'!";
 }
 
-// Opcional: Listar tablas
 $result = $conn->query("SHOW TABLES LIKE 'usuarios'");
 if ($result->num_rows > 0) {
     echo "<br>La tabla 'usuarios' existe.";
