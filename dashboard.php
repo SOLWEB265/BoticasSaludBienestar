@@ -161,10 +161,7 @@ $conn->close();
 
     <div class="product-list bg-white p-6 rounded-lg shadow">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-bold">LISTA DE PRODUCTOS</h2>
-        <button class="bg-[#5a82e8] text-white px-4 py-2 rounded hover:bg-[#4069c4]">
-          + Agregar Producto
-        </button>
+        <h2 class="text-xl font-bold">LISTA DE PRODUCTOS</h2>        
       </div>
       
       <table class="product-table w-full">
@@ -176,7 +173,6 @@ $conn->close();
             <th>Precio</th>
             <th>Proveedor</th>
             <th>Vencimiento</th>
-            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -206,11 +202,7 @@ $conn->close();
             <td><?php echo htmlspecialchars($producto['proveedor']); ?></td>
             <td class="<?php echo $expiryClass; ?>">
               <?php echo date('d/m/Y', strtotime($producto['fecha_vencimiento'])); ?>
-            </td>
-            <td>
-              <button class="text-blue-500 hover:text-blue-700 mr-2">Editar</button>
-              <button class="text-red-500 hover:text-red-700">Eliminar</button>
-            </td>
+            </td>            
           </tr>
           <?php endforeach; ?>
         </tbody>

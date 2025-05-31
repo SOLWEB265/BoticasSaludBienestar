@@ -16,7 +16,7 @@ if (!isset($_SESSION['loggedin'])) {
 <body class="h-screen bg-gradient-to-bl from-[#505b96] to-[#1d2332] font-sans text-white">
 <div class="w-full flex justify-end ">
   <div class="flex justify-center items-center gap-3 p-4">
-    <a href="notificacion.html">
+    <a href="notificacion.php">
       <button>
         <img src="imagenes/Chat.png" class="w-6 h-6" alt="Chat Icon">
       </button>
