@@ -28,10 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     if ($contrasena === $row['contrasena']) {
-      $_SESSION['user_id'] = $row['id'];
-      $_SESSION['user_name'] = $row['nombre'];
-      header("Location: interfaz.html");  // Redirigir al dashboard
-      exit();
+    $_SESSION['loggedin'] = true;
+    $_SESSION['user_id'] = $row['id'];
+    $_SESSION['user_name'] = $row['nombre'];
+    header("Location: interfaz.php");
+    exit();
     } else {
       $error = "Contraseña incorrecta.";
     }

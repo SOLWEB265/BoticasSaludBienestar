@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,6 +19,11 @@
     <a href="notificacion.html">
       <button>
         <img src="imagenes/Chat.png" class="w-6 h-6" alt="Chat Icon">
+      </button>
+    </a>
+    <a href="login.php">
+      <button>
+        <img src="imagenes/Salir.png" class="w-6 h-6" alt="Salir Icon">
       </button>
     </a>
     <img src="imagenes/Herramienta.png" class="w-6 h-6" alt="Herramienta Icon">
@@ -33,7 +45,7 @@
       <img src="imagenes/Proveedor de Pago.png" class="w-[105px] h-[105px]" alt="Proveedor de Pago Icon">
       <p class="text-sm font-medium text-center w-[85px]">Proveedor de pago</p >
     </div>
-    <a href="inventario.html" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+    <a href="inventario.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Almacen 2.png" class="w-[105px] h-[105px]" alt="Almacen Icon">
       <p class="text-sm font-medium text-center w-[85px]">Inventario</p>
     </a>
@@ -53,10 +65,10 @@
       <img src="imagenes/Documentos.png" class="w-[105px] h-[105px]" alt="Documentos Icon">
       <p class="text-sm font-medium text-center w-[85px]">Documentos</p>
     </div>
-    <div class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+    <a href="dashboard.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Dasboard.png" class="w-[105px] h-[105px]" alt="Dashboard Icon">
       <p class="text-sm font-medium text-center w-[85px]">DashBoard</p>
-    </div>
+    </a>
   </div>
 </div>
 </body>

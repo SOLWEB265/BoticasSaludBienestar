@@ -52,6 +52,11 @@
             <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 ">
           </button>
         </a>
+        <a href="javascript:history.back()">
+          <button>
+            <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
+          </button>
+        </a>
         <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
         <img src="imagenes/Botica.png" alt="Logo" class="w-10 rounded-full">
       </div>
