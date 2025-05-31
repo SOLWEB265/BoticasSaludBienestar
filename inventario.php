@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
         checkbox.checked = source.checked;
       });
     }
+
     function openEditModal() {
       document.getElementById('editModal').classList.remove('hidden');
     }
@@ -29,6 +31,7 @@
     }
   </script>
 </head>
+
 <body class="bg-gradient-to-bl from-[#505b96] to-[#1d2332] min-h-screen font-sans">
 
   <!-- Main -->
@@ -46,18 +49,18 @@
       <div class="flex items-center gap-3 ">
         <a href="notificacion.html">
           <button>
-            <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 ">  
+            <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 ">
           </button>
         </a>
         <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
         <img src="imagenes/Botica.png" alt="Logo" class="w-10 rounded-full">
       </div>
     </header>
-      <div class="flex gap-6 mb-4 pt-6 pl-20 ">
-        <a href="registro.html"><button href="registro.html" class="bg-yellow-200 cursor-pointer hover:bg-yellow-300 px-4 py-2 rounded text-sm">Agregar</button></a>
-        <button onclick="openEditModal()" class="bg-yellow-200 hover:bg-yellow-300 cursor-pointer px-4 py-2 rounded text-sm">Editar</button>
-        <button class="bg-yellow-200 hover:bg-yellow-300 px-4 py-2 rounded cursor-pointer text-sm">Eliminar</button>
-      </div>
+    <div class="flex gap-6 mb-4 pt-6 pl-20 ">
+      <a href="registro.html"><button href="registro.html" class="bg-yellow-200 cursor-pointer hover:bg-yellow-300 px-4 py-2 rounded text-sm">Agregar</button></a>
+      <button onclick="openEditModal()" class="bg-yellow-200 hover:bg-yellow-300 cursor-pointer px-4 py-2 rounded text-sm">Editar</button>
+      <button class="bg-yellow-200 hover:bg-yellow-300 px-4 py-2 rounded cursor-pointer text-sm">Eliminar</button>
+    </div>
     <div class="border-b-[3px]">
     </div>
     <!-- Filtro -->
@@ -75,58 +78,78 @@
           <li class="ml-4">L Proveedor</li>
         </ul>
         <div class="w-full flex gap-2 flex-col mt-2 items-center justify-center">
-          <input class="w-full h-[23px] rounded-md border-[#6276B9] border-[1px]"/>
+          <input class="w-full h-[23px] rounded-md border-[#6276B9] border-[1px]" />
           <div class="flex justify-between w-full">
             <button class="text-white bg-[#6276B9] flex justify-center items-center h-[23px] p-2 text-[15px]">Buscar</button>
             <button class="text-white bg-[#6276B9] flex justify-center items-center h-[23px] p-2 text-[15px]">Limpiar</button>
-
           </div>
         </div>
-      </aside>        
+      </aside>
       <!-- Contenido -->
       <section class="w-3/4 p-6">
-      <!-- Tabla -->
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b font-semibold text-left">
-              <th class="px-3 py-2">
-                <input type="checkbox" onclick="toggleCheckboxes(this)" class="form-checkbox h-5 w-5 text-blue-600" />
-              </th>
+        <!-- Tabla -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b font-semibold text-left">
+                <th class="px-3 py-2">
+                  <input type="checkbox" onclick="toggleCheckboxes(this)" class="form-checkbox h-5 w-5 text-blue-600" />
+                </th>
                 <th class="px-3 py-2">Codigo</th>
                 <th class="px-3 py-2">Producto</th>
                 <th class="px-3 py-2">Stock</th>
                 <th class="px-3 py-2">Precio</th>
                 <th class="px-3 py-2">Proveedor</th>
                 <th class="px-3 py-2">Fech. Vencimiento</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b">
-              <td class="px-3 py-2"><input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 row-checkbox" /></td>
-              <td class="px-3 py-2">N00001</td>
-              <td class="px-3 py-2">Paracetamol</td>
-              <td class="px-3 py-2">50</td>
-              <td class="px-3 py-2">1.20</td>
-              <td class="px-3 py-2">Drogueria Dicar</td>
-              <td class="px-3 py-2">25/06/2026</td>
-            </tr>
-            <tr>
-              <td class="px-3 py-2"><input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 row-checkbox" /></td>
-              <td class="px-3 py-2">N00002</td>
-              <td class="px-3 py-2">Diazepam</td>
-              <td class="px-3 py-2">30</td>
-              <td class="px-3 py-2">1.00</td>
-              <td class="px-3 py-2">Drogueria Cobefar</td>
-              <td class="px-3 py-2">10/07/2027</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>        
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              // Conexión a la base de datos
+              $servername = "localhost";
+              $username = "root";
+              $password = "";
+              $dbname = "botica";
+
+              $conn = new mysqli($servername, $username, $password, $dbname);
+
+              if ($conn->connect_error) {
+                die("Conexión fallida: " . $conn->connect_error);
+              }
+
+              // Consulta para obtener los productos
+              $sql = "SELECT codigo, producto, stock, precio, proveedor, fecha_vencimiento FROM productos";
+              $result = $conn->query($sql);
+
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                  // Formatear fecha de vencimiento (de YYYY-MM-DD a DD/MM/YYYY)
+                  $fecha_vencimiento = date("d/m/Y", strtotime($row["fecha_vencimiento"]));
+
+                  echo '<tr class="border-b">';
+                  echo '<td class="px-3 py-2"><input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 row-checkbox" /></td>';
+                  echo '<td class="px-3 py-2">' . $row["codigo"] . '</td>';
+                  echo '<td class="px-3 py-2">' . $row["producto"] . '</td>';
+                  echo '<td class="px-3 py-2">' . $row["stock"] . '</td>';
+                  echo '<td class="px-3 py-2">' . number_format($row["precio"], 2) . '</td>';
+                  echo '<td class="px-3 py-2">' . $row["proveedor"] . '</td>';
+                  echo '<td class="px-3 py-2">' . $fecha_vencimiento . '</td>';
+                  echo '</tr>';
+                }
+              } else {
+                echo '<tr><td colspan="7" class="px-3 py-2 text-center">No hay productos registrados</td></tr>';
+              }
+              $conn->close();
+              ?>
+            </tbody>
+          </table>
+        </div>
       </section>
     </div>
   </main>
-<div id="editModal" class="hidden fixed inset-0 bg-black/75 overflow-y-auto h-full w-full">
+
+  <!-- El resto de tu código (modal, etc.) permanece igual -->
+  <div id="editModal" class="hidden fixed inset-0 bg-black/75 overflow-y-auto h-full w-full">
     <div class="relative top-20 mx-auto p-5 border w-1/2 shadow-lg rounded-md bg-white">
       <!-- Modal Header -->
       <div class="flex justify-between items-center pb-3">
@@ -137,7 +160,7 @@
           </svg>
         </button>
       </div>
-      
+
       <!-- Modal Body - Formulario -->
       <form class="space-y-4">
         <div class="grid grid-cols-1 gap-4">
@@ -146,7 +169,7 @@
             <input type="text" class="mt-1 p-1  h-[32px] block w-full rounded-md border-gray-300 shadow-sm outline-none " value="Paracetamol">
           </div>
         </div>
-        
+
         <div class="grid grid-cols-3 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700">Stock</label>
@@ -165,19 +188,18 @@
             </select>
           </div>
         </div>
-        
+
         <div>
           <label class="block text-sm font-medium text-gray-700">Fecha de Vencimiento</label>
           <input type="date" class="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-300 focus:ring focus:ring-yellow-200 focus:ring-opacity-50" value="2026-06-25">
         </div>
       </form>
-      
+
       <!-- Modal Footer -->
       <div class="flex justify-end pt-4 space-x-3">
-        <button 
-          onclick="closeEditModal()" 
-          class="px-4 border-[#6276B9] cursor-pointer font-medium text-[#6276B9] border-[2px] py-2 text-sm rounded-md hover:bg-[#6276B9] hover:text-white transition-colors"
-        >
+        <button
+          onclick="closeEditModal()"
+          class="px-4 border-[#6276B9] cursor-pointer font-medium text-[#6276B9] border-[2px] py-2 text-sm rounded-md hover:bg-[#6276B9] hover:text-white transition-colors">
           Cancelar
         </button>
         <button class="px-4 py-2 text-white cursor-pointer font-medium hover:bg-[#4D5F98] text-sm bg-[#6276B9] rounded-md">
@@ -187,4 +209,5 @@
     </div>
   </div>
 </body>
+
 </html>
