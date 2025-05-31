@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alertas por Productos</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-bl from-[#505b96] to-[#1d2332]">
+
+  <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
+    <h2 class="text-2xl font-bold mb-6 text-center">Alertas por Productos Proximo a Vencer</h2>
+
+    <div class="bg-red-200 text-red-900 font-semibold p-4 rounded mb-10">
+      <span class="font-bold">Alerta:</span> El producto <span class="font-bold">Paracetamol 400mg</span> vence en menos de 30 días (Fecha: <span class="italic">2025-04-15</span>)
+    </div>
+
+    <div class="flex justify-start">
+      <a href="javascript:history.back()">
+        <button class="bg-yellow-200 text-gray-800 px-4 py-2 rounded hover:bg-yellow-300 transition">
+          Regresar Al Menu Anterior
+        </button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
