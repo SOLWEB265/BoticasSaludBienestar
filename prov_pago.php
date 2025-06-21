@@ -1,12 +1,45 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+  header("Location: login.php");
+  exit;
+}
+
+if (isset($_GET['logout'])) {
+  session_destroy();
+  header("Location: login.php");
+  exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario Proveedor</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-bl from-[#505b96] to-[#1d2332] min-h-screen flex items-center justify-center p-4">
+
+<body class="bg-gradient-to-bl from-[#505b96] to-[#1d2332] min-h-screen flex flex-col items-center justify-center ">
+  <div class="w-full flex justify-end ">
+    <div class="flex justify-center items-center gap-3 p-4">
+      <span class="text-lg font-medium text-white">Botica salud y bienestar</span>
+
+      <div class="relative">
+        <button onclick="toggleLogoutMenu()">
+          <img src="imagenes/User.jpg" class="w-6 h-6 cursor-pointer rounded-full" alt="Salir Icon">
+        </button>
+        <div id="logoutMenu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
+          <a href="?logout=true" class="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100">Cerrar sesión</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <div class="bg-white rounded-xl shadow-md w-full max-w-2xl">
     <div class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-center py-4 rounded-t-xl">
       <h2 class="text-lg font-semibold">PROVEEDOR DE PAGO "BOTICA SALUD Y BIENESTAR"</h2>
@@ -81,4 +114,5 @@
     </form>
   </div>
 </body>
+
 </html>

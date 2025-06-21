@@ -299,7 +299,14 @@ if ($result_proveedores->num_rows > 0) {
                     </button>
                 </a>
                 <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
-                <img src="imagenes/Botica.png" alt="Logo" class="w-10 rounded-full">
+                <div class="relative">
+                    <button onclick="toggleLogoutMenu()">
+                        <img src="imagenes/Botica.png" class="w-10 mt-2 cursor-pointer rounded-full" alt="Salir Icon">
+                    </button>
+                    <div id="logoutMenu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
+                        <a href="?logout=true" class="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100">Cerrar sesión</a>
+                    </div>
+                </div>
             </div>
         </header>
 
