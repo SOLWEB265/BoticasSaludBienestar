@@ -13,7 +13,7 @@ if (!isset($_SESSION['loggedin'])) {
   <title>Menú Principal - Botica Salud</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="h-screen bg-gradient-to-bl from-[#505b96] to-[#1d2332] font-sans text-white">
+<body class="min-h-screen bg-gradient-to-bl from-[#505b96] to-[#1d2332] font-sans text-white">
 <div class="w-full flex justify-end ">
   <div class="flex justify-center items-center gap-3 p-4">
     <a href="notificacion.php">
@@ -57,10 +57,10 @@ if (!isset($_SESSION['loggedin'])) {
 </div>
 <div class="flex-col flex justify-center items-center w-full">
   <div class="flex items-start justify-center w-[80%] gap-16 p-14">
-    <div class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+    <a href="motor_pago.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Motor de Pago.png" class="w-[105px] h-[105px]" alt="Motor de Pago Icon">
       <p class="text-sm font-medium text-center w-[85px]">Motor de Pago</p>
-    </div>
+    </a>
     <a href="documentos.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Documentos.png" class="w-[105px] h-[105px]" alt="Documentos Icon">
       <p class="text-sm font-medium text-center w-[85px]">Documentos</p>
