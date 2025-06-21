@@ -23,6 +23,116 @@ if ($conn->connect_error) {
   die("Conexión fallida: " . $conn->connect_error);
 }
 
+// Manejar la generación del reporte
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $reporte = $_POST['reporte'] ?? '';
+  $fecha_desde = $_POST['fecha_desde'] ?? '';
+  $fecha_hasta = $_POST['fecha_hasta'] ?? '';
+  $proveedor = $_POST['proveedor'] ?? '';
+
+  if ($reporte === 'Reporte de stock actual') {
+    // Construir la consulta SQL con filtros
+    $sql = "SELECT codigo, producto, stock, precio, proveedor, fecha_vencimiento 
+            FROM productos 
+            WHERE 1=1";
+
+    if (!empty($proveedor)) {
+      $sql .= " AND proveedor = '" . $conn->real_escape_string($proveedor) . "'";
+    }
+
+    if (!empty($fecha_desde) && !empty($fecha_hasta)) {
+      $sql .= " AND fecha_registro BETWEEN '" . $conn->real_escape_string($fecha_desde) . "' 
+                AND '" . $conn->real_escape_string($fecha_hasta) . "'";
+    }
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+      // Configurar headers para descarga de Excel
+      header('Content-Type: application/vnd.ms-excel');
+      header('Content-Disposition: attachment; filename="reporte_stock_actual.xls"');
+      header('Cache-Control: max-age=0');
+
+      // Crear contenido del Excel
+      echo "<table border='1'>";
+      echo "<tr>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Stock</th>
+              <th>Precio</th>
+              <th>Proveedor</th>
+              <th>Fecha Vencimiento</th>
+            </tr>";
+
+      while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>" . htmlspecialchars($row['codigo']) . "</td>
+                <td>" . htmlspecialchars($row['producto']) . "</td>
+                <td>" . htmlspecialchars($row['stock']) . "</td>
+                <td>" . htmlspecialchars($row['precio']) . "</td>
+                <td>" . htmlspecialchars($row['proveedor']) . "</td>
+                <td>" . htmlspecialchars($row['fecha_vencimiento']) . "</td>
+              </tr>";
+      }
+
+      echo "</table>";
+      exit;
+    } else {
+      $mensaje = "No se encontraron datos con los filtros seleccionados.";
+    }
+  } elseif ($reporte === 'Productos Vencidos') {
+    // Consulta para productos vencidos (fecha_vencimiento < fecha actual)
+    $sql = "SELECT codigo, producto, stock, precio, proveedor, fecha_vencimiento 
+            FROM productos 
+            WHERE fecha_vencimiento < CURDATE()";
+
+    if (!empty($proveedor)) {
+      $sql .= " AND proveedor = '" . $conn->real_escape_string($proveedor) . "'";
+    }
+
+    if (!empty($fecha_desde) && !empty($fecha_hasta)) {
+      $sql .= " AND fecha_registro BETWEEN '" . $conn->real_escape_string($fecha_desde) . "' 
+                AND '" . $conn->real_escape_string($fecha_hasta) . "'";
+    }
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+      header('Content-Type: application/vnd.ms-excel');
+      header('Content-Disposition: attachment; filename="productos_vencidos.xls"');
+      header('Cache-Control: max-age=0');
+
+      echo "<table border='1'>";
+      echo "<tr>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Stock</th>
+              <th>Precio</th>
+              <th>Proveedor</th>
+              <th>Fecha Vencimiento</th>
+              <th>Estado</th>
+            </tr>";
+
+      while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>" . htmlspecialchars($row['codigo']) . "</td>
+                <td>" . htmlspecialchars($row['producto']) . "</td>
+                <td>" . htmlspecialchars($row['stock']) . "</td>
+                <td>" . htmlspecialchars($row['precio']) . "</td>
+                <td>" . htmlspecialchars($row['proveedor']) . "</td>
+                <td>" . htmlspecialchars($row['fecha_vencimiento']) . "</td>
+                <td>VENCIDO</td>
+              </tr>";
+      }
+
+      echo "</table>";
+      exit;
+    } else {
+      $mensaje = "No se encontraron productos vencidos con los filtros seleccionados.";
+    }
+  }
+}
+
 $sql_proveedores = "SELECT DISTINCT proveedor FROM productos ORDER BY proveedor";
 $result_proveedores = $conn->query($sql_proveedores);
 $proveedores = [];
@@ -32,6 +142,7 @@ if ($result_proveedores->num_rows > 0) {
   }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -42,7 +153,7 @@ if ($result_proveedores->num_rows > 0) {
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     function toggleLogoutMenu(event) {
-      event.stopPropagation(); // Evita que el clic se propague al documento
+      event.stopPropagation();
       const menu = document.getElementById('logoutMenu');
       menu.classList.toggle('hidden');
     }
@@ -56,6 +167,25 @@ if ($result_proveedores->num_rows > 0) {
 
     document.getElementById('logoutMenu').addEventListener('click', function(event) {
       event.stopPropagation();
+    });
+
+    // Mostrar/ocultar filtros de fecha según el reporte seleccionado
+    function toggleFechaFilters() {
+      const reporte = document.getElementById('reporte').value;
+      const fechaFilters = document.getElementById('fechaFilters');
+
+      if (reporte === 'Productos Vencidos') {
+        fechaFilters.classList.add('hidden');
+      } else {
+        fechaFilters.classList.remove('hidden');
+      }
+    }
+
+
+    // Ejecutar al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      toggleFechaFilters();
+      document.getElementById('reporte').addEventListener('change', toggleFechaFilters);
     });
   </script>
 </head>
@@ -97,31 +227,39 @@ if ($result_proveedores->num_rows > 0) {
 
     <div class="flex flex-col items-center py-10">
       <h1 class="text-2xl font-bold text-[#2a3c96] mb-6">Generar Reportes</h1>
+      <?php if (isset($mensaje)): ?>
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+          <?php echo $mensaje; ?>
+        </div>
+      <?php endif; ?>
       <div class="bg-gray-100 w-[600px] p-8 rounded shadow-md">
-        <form action="#" method="POST" class="space-y-4">
+        <form action="" method="POST" class="space-y-4">
           <div>
             <label for="reporte" class="block font-semibold text-sm">Seleccionar Reporte</label>
             <select id="reporte" name="reporte" class="w-full mt-1 border border-gray-300 rounded px-3 py-2">
+              <option value="" selected disabled>-- Seleccione un reporte --</option>
               <option>Reporte de stock actual</option>
               <option>Movimientos de inventarios(en proceso)</option>
               <option>Productos Vencidos</option>
             </select>
           </div>
 
-          <div class="flex gap-4">
+          <div id="fechaFilters" class="flex gap-4">
             <div class="flex-1">
               <label for="fecha_desde" class="block text-sm font-medium">Fecha Desde</label>
-              <input type="date" id="fecha_desde" name="fecha_desde" class="w-full border border-gray-300 rounded px-3 py-2" value="2024-05-10">
+              <input type="date" id="fecha_desde" name="fecha_desde" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Fecha inicio">
             </div>
             <div class="flex-1">
               <label for="fecha_hasta" class="block text-sm font-medium">Fecha Hasta</label>
-              <input type="date" id="fecha_hasta" name="fecha_hasta" class="w-full border border-gray-300 rounded px-3 py-2" value="2025-05-10">
+              <input type="date" id="fecha_hasta" name="fecha_hasta" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Fecha fin">
             </div>
           </div>
 
           <div>
             <label for="proveedor" class="block text-sm font-medium">Proveedor</label>
             <select id="proveedor" name="proveedor" class="w-full border border-gray-300 rounded px-3 py-2">
+              <option value="" selected disabled>-- Seleccione --</option>
+              <option value="">Todos los proveedores</option>
               <?php foreach ($proveedores as $proveedor) : ?>
                 <option value="<?php echo $proveedor; ?>"><?php echo $proveedor; ?></option>
               <?php endforeach; ?>
