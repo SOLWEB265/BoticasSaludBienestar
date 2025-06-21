@@ -36,8 +36,8 @@ if ($result_proveedores->num_rows > 0) {
         <img src="imagenes/Almacen.png" alt="Icono" class="w-12 h-12 ">
         <nav class="flex gap-6 text-sm font-medium">
           <a href="inventario.php" class="hover:underline">INVENTARIO</a>
-          <a href="#" class="hover:underline">PRODUCTOS</a>
-          <a href="inter_reportes.php" class="hover:underline underline">REPORTES</a>
+          <a href="productos.php" class="hover:underline">PRODUCTOS</a>
+          <a href="reportes.php" class="hover:underline underline">REPORTES</a>
           <a href="#" class="hover:underline">CONFIGURACION</a>
         </nav>
       </div>
@@ -65,7 +65,7 @@ if ($result_proveedores->num_rows > 0) {
             <label for="reporte" class="block font-semibold text-sm">Seleccionar Reporte</label>
             <select id="reporte" name="reporte" class="w-full mt-1 border border-gray-300 rounded px-3 py-2">
               <option>Reporte de stock actual</option>
-              <option>Movimientos de inventarios</option>
+              <option>Movimientos de inventarios(en proceso)</option>
               <option>Productos Vencidos</option>
             </select>
           </div>

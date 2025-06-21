@@ -281,9 +281,9 @@ if ($result_proveedores->num_rows > 0) {
       <div class="flex items-center gap-2">
         <img src="imagenes/Almacen.png" alt="Icono" class="w-12 h-12 ">
         <nav class="flex gap-6 text-sm font-medium">
-          <a href="#" class="hover:underline">INVENTARIO</a>
-          <a href="inventario.php" class="hover:underline">PRODUCTOS</a>
-          <a href="inter_reportes.php" class="hover:underline">REPORTES</a>
+          <a href="inventario.php" class="hover:underline">INVENTARIO</a>
+          <a href="productos.php" class="hover:underline">PRODUCTOS</a>
+          <a href="reportes.php" class="hover:underline">REPORTES</a>
           <a href="#" class="hover:underline">CONFIGURACION</a>
         </nav>
       </div>
