@@ -9,7 +9,7 @@
 <body class="bg-gradient-to-bl from-[#505b96] to-[#1d2332] min-h-screen flex flex-col ">
   <div class="w-full flex flex-col items-end ">
     <div class="flex justify-center items-center gap-3 p-4">      
-      <a href="interfaz.php">
+      <a href="interfaz.php" class="flex justify-center pr-2 items-center">
           <button>
             <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
           </button>

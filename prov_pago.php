@@ -10,6 +10,7 @@ if (isset($_GET['logout'])) {
   header("Location: login.php");
   exit;
 }
+
 ?>
 
 
@@ -21,6 +22,19 @@ if (isset($_GET['logout'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario Proveedor</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function limpiarFormulario() {
+      const form = document.querySelector('#formularioProveedor');
+      form.querySelectorAll('input, textarea, select').forEach(el => {
+        if (el.type === 'radio' || el.type === 'checkbox') {
+          el.checked = false;
+        } else {
+          el.value = '';
+        }
+      });
+    }
+  </script>
+
   <script>
     function toggleLogoutMenu(event) {
       event.stopPropagation(); // Evita que el clic se propague al documento
@@ -44,6 +58,11 @@ if (isset($_GET['logout'])) {
 <body class="bg-gradient-to-bl from-[#505b96] to-[#1d2332] min-h-screen flex flex-col ">
   <div class="w-full flex justify-end ">
     <div class="flex justify-center items-center gap-3 p-4">
+      <a href="interfaz.php" class="flex justify-center pr-2 items-center">
+        <button>
+          <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
+        </button>
+      </a>
       <span class="text-lg font-medium text-white">Botica salud y bienestar</span>
 
       <div class="relative flex justify-center items-center">
@@ -62,7 +81,7 @@ if (isset($_GET['logout'])) {
       <div class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white text-center py-4 rounded-t-xl">
         <h2 class="text-lg font-semibold">PROVEEDOR DE PAGO "BOTICA SALUD Y BIENESTAR"</h2>
       </div>
-      <form class="p-6 space-y-6">
+      <form id="formularioProveedor" class="p-6 space-y-6">
         <!-- Información Básica -->
         <div>
           <h3 class="text-indigo-600 font-semibold text-sm mb-2">Información Básica</h3>
@@ -125,8 +144,9 @@ if (isset($_GET['logout'])) {
         </div>
 
         <!-- Botones -->
+        <!-- Botones -->
         <div class="flex justify-end space-x-3 pt-4">
-          <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded-md hover:bg-gray-300">CANCELAR</button>
+          <button type="button" onclick="limpiarFormulario()" class="px-4 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded-md hover:bg-gray-300">CANCELAR</button>
           <button type="submit" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700">GUARDAR</button>
         </div>
       </form>
