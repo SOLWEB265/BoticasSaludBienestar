@@ -47,6 +47,19 @@ if ($result_proveedores->num_rows > 0) {
     $proveedores[] = $row['proveedor'];
   }
 }
+
+
+ session_start();
+  if (!isset($_SESSION['loggedin'])) {
+    header("Location: login.php");
+    exit;
+  }
+
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: login.php");
+    exit;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -57,6 +70,24 @@ if ($result_proveedores->num_rows > 0) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inventario</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script>
+      function toggleLogoutMenu(event) {
+        event.stopPropagation(); // Evita que el clic se propague al documento
+        const menu = document.getElementById('logoutMenu');
+        menu.classList.toggle('hidden');
+      }
+
+      document.addEventListener('click', function() {
+        const menu = document.getElementById('logoutMenu');
+        if (!menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('logoutMenu').addEventListener('click', function(event) {
+        event.stopPropagation();
+      });
+    </script>
   <script>
     let productoSeleccionado = null;
     const botonEditar = document.getElementById('btnEditar');
@@ -299,7 +330,14 @@ if ($result_proveedores->num_rows > 0) {
           </button>
         </a>
         <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
-        <img src="imagenes/Botica.png" alt="Logo" class="w-10 rounded-full">
+        <div class="relative flex justify-center items-center">
+          <button onclick="toggleLogoutMenu(event)">
+            <img src="imagenes/Botica.png" class="w-10 cursor-pointer rounded-full" alt="Salir Icon">
+          </button>
+          <div id="logoutMenu" class="hidden absolute right-0 top-8 w-40 bg-white rounded-md shadow-lg z-10">
+            <a href="?logout=true" class="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100">Cerrar sesión</a>
+          </div>
+        </div>
       </div>
     </header>
     <div class="flex gap-6 mb-4 pt-6 pl-20 ">

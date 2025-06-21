@@ -1,3 +1,18 @@
+  <?php
+
+  session_start();
+  if (!isset($_SESSION['loggedin'])) {
+    header("Location: login.php");
+    exit;
+  }
+
+  if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: login.php");
+    exit;
+  }
+
+  ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,6 +20,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario Factura</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+      function toggleLogoutMenu(event) {
+        event.stopPropagation(); // Evita que el clic se propague al documento
+        const menu = document.getElementById('logoutMenu');
+        menu.classList.toggle('hidden');
+      }
+
+      document.addEventListener('click', function() {
+        const menu = document.getElementById('logoutMenu');
+        if (!menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('logoutMenu').addEventListener('click', function(event) {
+        event.stopPropagation();
+      });
+    </script>
 </head>
 <body class="bg-gradient-to-bl from-[#505b96] to-[#1d2332] min-h-screen flex flex-col">
 <div class="w-full flex flex-col items-end ">
@@ -15,7 +48,14 @@
           </button>
         </a>
       <span class="text-lg font-medium text-white">Botica salud y bienestar</span>
-      <img src="imagenes/User.jpg" class="w-10 h-10 rounded-full" alt="User  Image">
+      <div class="relative flex justify-center items-center">
+          <button onclick="toggleLogoutMenu(event)">
+            <img src="imagenes/User.jpg" class="w-6 h-6 cursor-pointer rounded-full" alt="Salir Icon">
+          </button>
+          <div id="logoutMenu" class="hidden absolute right-0 top-8 w-40 bg-white rounded-md shadow-lg z-10">
+            <a href="?logout=true" class="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100">Cerrar sesión</a>
+          </div>
+        </div>
     </div>
   </div>
 
