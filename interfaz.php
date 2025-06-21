@@ -33,26 +33,26 @@ if (!isset($_SESSION['loggedin'])) {
 </div>
 <div class="flex-col flex justify-center items-center w-full">
   <div class="flex items-start justify-center w-[80%] gap-16 p-14 pt-[10rem]">
-    <div class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+    <a href="contactos.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Contactos.png" class="w-[105px] h-[105px]" alt="Contactos Icon">   
       <p class="text-sm font-medium text-center w-[85px]">Contactos</p>
-    </div>
-    <div class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+    </a>
+    <a href="ventas.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Ventas.png" class="w-[105px] h-[105px]" alt="Ventas Icon">
       <p class="text-sm font-medium text-center w-[85px]">Ventas</p>
-    </div>
-    <div class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+    </a>
+    <a href="prov_pago.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Proveedor de Pago.png" class="w-[105px] h-[105px]" alt="Proveedor de Pago Icon">
       <p class="text-sm font-medium text-center w-[85px]">Proveedor de pago</p >
-    </div>
+    </a>
     <a href="inventario.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Almacen 2.png" class="w-[105px] h-[105px]" alt="Almacen Icon">
       <p class="text-sm font-medium text-center w-[85px]">Inventario</p>
     </a>
-    <div class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+    <a href="facturacion.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/facturacion.png" class="w-[105px] h-[105px]" alt="Facturacion Icon">
       <p class="text-sm font-medium text-center w-[85px]">Facturacion</p>
-    </div>
+    </a>
   </div>
 </div>
 <div class="flex-col flex justify-center items-center w-full">
@@ -61,10 +61,10 @@ if (!isset($_SESSION['loggedin'])) {
       <img src="imagenes/Motor de Pago.png" class="w-[105px] h-[105px]" alt="Motor de Pago Icon">
       <p class="text-sm font-medium text-center w-[85px]">Motor de Pago</p>
     </div>
-    <div class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+    <a href="documentos.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Documentos.png" class="w-[105px] h-[105px]" alt="Documentos Icon">
       <p class="text-sm font-medium text-center w-[85px]">Documentos</p>
-    </div>
+    </a>
     <a href="dashboard.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
       <img src="imagenes/Dasboard.png" class="w-[105px] h-[105px]" alt="Dashboard Icon">
       <p class="text-sm font-medium text-center w-[85px]">DashBoard</p>
