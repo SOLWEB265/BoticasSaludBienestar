@@ -59,10 +59,10 @@ if (!isset($_SESSION['loggedin'])) {
   </div>
   <div class="flex-col flex justify-center items-center w-full">
     <div class="flex items-start justify-center w-[80%] gap-16 p-14">
-      <div class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
+      <a href="motor_pago.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
         <img src="imagenes/Motor de Pago.png" class="w-[105px] h-[105px]" alt="Motor de Pago Icon">
         <p class="text-sm font-medium text-center w-[85px]">Motor de Pago</p>
-      </div>
+      </a>
       <a href="documentos.php" class="flex-col flex items-center justify-center transition-transform transform hover:scale-105 ">
         <img src="imagenes/Documentos.png" class="w-[105px] h-[105px]" alt="Documentos Icon">
         <p class="text-sm font-medium text-center w-[85px]">Documentos</p>
