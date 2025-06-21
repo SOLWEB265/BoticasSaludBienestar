@@ -199,7 +199,7 @@ if ($result_proveedores->num_rows > 0) {
           <a href="inventario.php" class="hover:underline">INVENTARIO</a>
           <a href="productos.php" class="hover:underline">PRODUCTOS</a>
           <a href="reportes.php" class="hover:underline underline">REPORTES</a>
-          <a href="#" class="hover:underline">CONFIGURACION</a>
+          <!--  <a href="#" class="hover:underline">CONFIGURACION</a> -->
         </nav>
       </div>
       <div class="flex items-center gap-3 ">
