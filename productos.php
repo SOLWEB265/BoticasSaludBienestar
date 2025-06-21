@@ -1,4 +1,18 @@
 <?php
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Manejar el logout
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
+
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -271,6 +285,24 @@ if ($result_proveedores->num_rows > 0) {
     <script>
         const proveedores = <?php echo json_encode($proveedores); ?>;
     </script>
+    <script>
+        function toggleLogoutMenu(event) {
+            event.stopPropagation(); // Evita que el clic se propague al documento
+            const menu = document.getElementById('logoutMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.addEventListener('click', function() {
+            const menu = document.getElementById('logoutMenu');
+            if (!menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('logoutMenu').addEventListener('click', function(event) {
+            event.stopPropagation();
+        });
+    </script>
 </head>
 
 <body class="bg-gradient-to-bl from-[#505b96] to-[#1d2332] min-h-screen font-sans">
@@ -299,11 +331,11 @@ if ($result_proveedores->num_rows > 0) {
                     </button>
                 </a>
                 <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
-                <div class="relative">
-                    <button onclick="toggleLogoutMenu()">
+                <div class="relative flex justify-center items-center">
+                    <button onclick="toggleLogoutMenu(event)">
                         <img src="imagenes/Botica.png" class="w-10 mt-2 cursor-pointer rounded-full" alt="Salir Icon">
                     </button>
-                    <div id="logoutMenu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
+                    <div id="logoutMenu" class="hidden absolute right-0 top-12 w-40 bg-white rounded-md shadow-lg z-10">
                         <a href="?logout=true" class="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100">Cerrar sesión</a>
                     </div>
                 </div>
