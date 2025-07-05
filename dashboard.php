@@ -36,6 +36,7 @@ $conn->close();
 
 <head>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Botica Salud y Bienestar - Dashboard</title>
@@ -130,7 +131,7 @@ $conn->close();
 
   <div class="topbar">
     <div class="search">
-      <input type="text" placeholder="Buscar productos..." class="px-4 py-2 border rounded-lg">
+      <input type="text" id="searchInput" placeholder="Buscar productos..." class="px-4 py-2 border rounded-lg">
     </div>
 
     <div class="welcome flex justify-center items-center">
@@ -152,11 +153,11 @@ $conn->close();
     <div class="metrics grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div class="metric bg-white p-4 rounded-lg shadow">
         <h3 class="text-gray-500">TOTAL PRODUCTOS</h3>
-        <span class="text-2xl font-bold"><?php echo count($productos); ?></span>
+        <span id="totalProducts" class="text-2xl font-bold"><?php echo count($productos); ?></span>
       </div>
       <div class="metric bg-white p-4 rounded-lg shadow">
         <h3 class="text-gray-500">STOCK BAJO (<10) </h3>
-            <span class="text-2xl font-bold text-red-500">
+            <span id="lowStock" class="text-2xl font-bold text-red-500">
               <?php
               $lowStock = array_filter($productos, function ($p) {
                 return $p['stock'] < 10;
@@ -167,7 +168,7 @@ $conn->close();
       </div>
       <div class="metric bg-white p-4 rounded-lg shadow">
         <h3 class="text-gray-500">PRÓXIMOS A VENCER</h3>
-        <span class="text-2xl font-bold text-yellow-500">
+        <span id="nearExpiry" class="text-2xl font-bold text-yellow-500">
           <?php
           $nearExpiry = array_filter($productos, function ($p) {
             return strtotime($p['fecha_vencimiento']) < strtotime('+30 days');
@@ -181,6 +182,10 @@ $conn->close();
     <div class="product-list bg-white p-6 rounded-lg shadow">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-bold">LISTA DE PRODUCTOS</h2>
+        <span id="searchFeedback" class="text-sm text-gray-500 hidden">
+          Mostrando resultados para: "<span id="searchTerm"></span>"
+          <a href="javascript:clearSearch()" class="text-blue-500 ml-2">Limpiar</a>
+        </span>
       </div>
 
       <table class="product-table w-full">
@@ -194,7 +199,7 @@ $conn->close();
             <th>Vencimiento</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="productTableBody">
           <?php foreach ($productos as $producto):
             $stockClass = '';
             if ($producto['stock'] < 10) {
@@ -228,6 +233,59 @@ $conn->close();
       </table>
     </div>
   </div>
+
+  <script>
+    // Espera 300ms después de que el usuario deja de escribir
+    let searchTimeout;
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        searchProducts(this.value);
+      }, 300);
+    });
+
+    function searchProducts(term) {
+      if (term.trim() === '') {
+        clearSearch();
+        return;
+      }
+
+      axios.get('search_products.php', {
+          params: {
+            search: term
+          }
+        })
+        .then(response => {
+          document.getElementById('productTableBody').innerHTML = response.data.table;
+          document.getElementById('searchTerm').textContent = term;
+          document.getElementById('searchFeedback').classList.remove('hidden');
+
+          // Actualizar métricas
+          document.getElementById('totalProducts').textContent = response.data.total;
+          document.getElementById('lowStock').textContent = response.data.lowStock;
+          document.getElementById('nearExpiry').textContent = response.data.nearExpiry;
+        })
+        .catch(error => {
+          console.error('Error en la búsqueda:', error);
+        });
+    }
+
+    function clearSearch() {
+      searchInput.value = '';
+      document.getElementById('searchFeedback').classList.add('hidden');
+
+      // Recargar los datos originales
+      axios.get('search_products.php')
+        .then(response => {
+          document.getElementById('productTableBody').innerHTML = response.data.table;
+          document.getElementById('totalProducts').textContent = response.data.total;
+          document.getElementById('lowStock').textContent = response.data.lowStock;
+          document.getElementById('nearExpiry').textContent = response.data.nearExpiry;
+        });
+    }
+  </script>
 </body>
 
 </html>
