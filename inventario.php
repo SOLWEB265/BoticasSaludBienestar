@@ -49,17 +49,17 @@ if ($result_proveedores->num_rows > 0) {
 }
 
 
- session_start();
-  if (!isset($_SESSION['loggedin'])) {
-    header("Location: login.php");
-    exit;
-  }
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+  header("Location: login.php");
+  exit;
+}
 
-  if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: login.php");
-    exit;
-  }
+if (isset($_GET['logout'])) {
+  session_destroy();
+  header("Location: login.php");
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -71,23 +71,23 @@ if ($result_proveedores->num_rows > 0) {
   <title>Inventario</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script>
-      function toggleLogoutMenu(event) {
-        event.stopPropagation(); // Evita que el clic se propague al documento
-        const menu = document.getElementById('logoutMenu');
-        menu.classList.toggle('hidden');
+    function toggleLogoutMenu(event) {
+      event.stopPropagation(); // Evita que el clic se propague al documento
+      const menu = document.getElementById('logoutMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', function() {
+      const menu = document.getElementById('logoutMenu');
+      if (!menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
       }
+    });
 
-      document.addEventListener('click', function() {
-        const menu = document.getElementById('logoutMenu');
-        if (!menu.classList.contains('hidden')) {
-          menu.classList.add('hidden');
-        }
-      });
-
-      document.getElementById('logoutMenu').addEventListener('click', function(event) {
-        event.stopPropagation();
-      });
-    </script>
+    document.getElementById('logoutMenu').addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+  </script>
   <script>
     let productoSeleccionado = null;
     const botonEditar = document.getElementById('btnEditar');
@@ -315,21 +315,20 @@ if ($result_proveedores->num_rows > 0) {
           <a href="inventario.php" class="hover:underline">INVENTARIO</a>
           <a href="productos.php" class="hover:underline">PRODUCTOS</a>
           <a href="reportes.php" class="hover:underline">REPORTES</a>
-         <!--  <a href="#" class="hover:underline">CONFIGURACION</a> -->
+          <!--  <a href="#" class="hover:underline">CONFIGURACION</a> -->
         </nav>
       </div>
       <div class="flex items-center gap-3 ">
         <a href="notificacion.php">
-          <button>
+          <button class="cursor-pointer">
             <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 ">
           </button>
         </a>
         <a href="interfaz.php">
-          <button>
+          <button class="cursor-pointer">
             <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
           </button>
         </a>
-        <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
         <div class="relative flex justify-center items-center">
           <button onclick="toggleLogoutMenu(event)">
             <img src="imagenes/Botica.png" class="w-10 cursor-pointer rounded-full" alt="Salir Icon">
@@ -363,8 +362,8 @@ if ($result_proveedores->num_rows > 0) {
         <div class="w-full flex gap-2 flex-col mt-2 items-center justify-center">
           <input id="inputBusqueda" class="w-full p-2 h-[23px] rounded-md border-[#6276B9] border-[1px]" />
           <div class="flex justify-between w-full">
-            <button onclick="aplicarBusqueda()" class="text-white bg-[#6276B9] flex justify-center items-center h-[23px] p-2 text-[15px]">Buscar</button>
-            <button onclick="limpiarBusqueda()" class="text-white bg-[#6276B9] flex justify-center items-center h-[23px] p-2 text-[15px]">Limpiar</button>
+            <button onclick="aplicarBusqueda()" class="text-white bg-[#6276B9] flex justify-center items-center h-[23px] p-2 text-[15px] cursor-pointer">Buscar</button>
+            <button onclick="limpiarBusqueda()" class="text-white bg-[#6276B9] flex justify-center items-center h-[23px] p-2 text-[15px] cursor-pointer">Limpiar</button>
           </div>
         </div>
       </aside>
@@ -374,7 +373,7 @@ if ($result_proveedores->num_rows > 0) {
             <thead>
               <tr class="border-b font-semibold text-left">
                 <th class="px-3 py-2">
-                  <input type="checkbox" onclick="toggleCheckboxes(this)" class="form-checkbox h-5 w-5 text-blue-600" />
+                  <input type="checkbox" onclick="toggleCheckboxes(this)" class="form-checkbox cursor-pointer h-5 w-5 text-blue-600" />
                 </th>
                 <th class="px-3 py-2">Codigo</th>
                 <th class="px-3 py-2">Producto</th>
@@ -391,7 +390,7 @@ if ($result_proveedores->num_rows > 0) {
                   $fecha_vencimiento = date("d/m/Y", strtotime($row["fecha_vencimiento"]));
 
                   echo '<tr class="border-b">';
-                  echo '<td class="px-3 py-2"><input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600 row-checkbox" /></td>';
+                  echo '<td class="px-3 py-2"><input type="checkbox" class="form-checkbox cursor-pointer h-5 w-5 text-blue-600 row-checkbox" /></td>';
                   echo '<td class="px-3 py-2">' . $row["codigo"] . '</td>';
                   echo '<td class="px-3 py-2">' . $row["producto"] . '</td>';
                   echo '<td class="px-3 py-2">' . $row["stock"] . '</td>';
