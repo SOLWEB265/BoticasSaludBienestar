@@ -126,6 +126,68 @@ if (isset($_GET['logout'])) {
       }
     }
 
+    function validarYGuardar() {
+      const modal = document.getElementById('editModal');
+      const stock = parseFloat(modal.querySelector('input[name="stock"]').value);
+      const precio = parseFloat(modal.querySelector('input[name="precio"]').value);
+      const fechaVencimiento = modal.querySelector('input[name="fecha_vencimiento"]').value;
+      let hayError = false;
+
+      // Validar stock
+      const stockError = document.getElementById('stockError');
+      if (stock < 1 || stock > 5000 || !Number.isInteger(stock)) {
+        stockError.textContent = stock < 1 ?
+          "La cantidad mínima es 1." :
+          stock > 5000 ?
+          "La cantidad máxima es 5000." :
+          "Debe ser un número entero.";
+        stockError.classList.remove('hidden');
+        hayError = true;
+      } else {
+        stockError.classList.add('hidden');
+      }
+
+      // Validar precio
+      const precioError = document.getElementById('precioError');
+      if (precio < 0.01 || precio > 1000) {
+        precioError.textContent = precio < 0.01 ?
+          "El precio mínimo es S/0.01." :
+          "El precio máximo es S/1000.00.";
+        precioError.classList.remove('hidden');
+        hayError = true;
+      } else {
+        precioError.classList.add('hidden');
+      }
+
+      // Validar fecha de vencimiento
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+      const fechaVenc = new Date(fechaVencimiento);
+
+      if (fechaVenc < hoy) {
+        alert("La fecha de vencimiento no puede ser anterior a la fecha actual.");
+        hayError = true;
+      }
+
+      if (!hayError) {
+        guardarCambios();
+      }
+    }
+
+    // Función para validar que el stock sea entero
+    function validarEntero(input) {
+      if (input.name === 'stock') {
+        const errorElement = document.getElementById('stockError');
+        if (input.value.includes('.')) {
+          input.value = Math.floor(input.value);
+          errorElement.textContent = "La cantidad debe ser un número entero.";
+          errorElement.classList.remove('hidden');
+        } else {
+          errorElement.classList.add('hidden');
+        }
+      }
+    }
+
     function openEditModal() {
       if (!productoSeleccionado) return;
 
@@ -154,7 +216,7 @@ if (isset($_GET['logout'])) {
       }
 
       const [day, month, year] = productoSeleccionado.fecha_vencimiento.split('/');
-      const fechaFormatoInput = `${year}-${month}-${day}`;
+      const fechaFormatoInput = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
       modal.querySelector('input[name="fecha_vencimiento"]').value = fechaFormatoInput;
 
       modal.classList.remove('hidden');
@@ -433,22 +495,24 @@ if (isset($_GET['logout'])) {
         <div class="grid grid-cols-3 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700">Stock</label>
-            <input type="number" name="stock" class="mt-1 block p-1 w-full h-[32px] rounded-md border-gray-300 shadow-sm outline-none">
+            <input type="number" name="stock" min="1" max="5000" oninput="validarEntero(this)" class="mt-1 block p-1 w-full h-[32px] rounded-md border-gray-300 shadow-sm outline-none" required>
+            <p id="stockError" class="hidden text-red-500 text-xs mt-1">El stock debe ser entre 1 y 5000 unidades.</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Precio</label>
-            <input type="number" step="0.01" name="precio" class="mt-1 h-[32px] p-1 block w-full rounded-md border-gray-300 shadow-sm outline-none">
+            <input type="number" step="0.01" name="precio" min="0.01" max="1000.00" class="mt-1 h-[32px] p-1 block w-full rounded-md border-gray-300 shadow-sm outline-none" required>
+            <p id="precioError" class="hidden text-red-500 text-xs mt-1">El precio debe ser entre S/0.01 y S/1000.00.</p>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700">Proveedor</label>
-            <select name="proveedor" class="mt-1 block w-full h-[32px] rounded-md border-gray-300 shadow-sm outline-none">
+            <select name="proveedor" class="mt-1 block w-full h-[32px] rounded-md border-gray-300 shadow-sm outline-none" required>
             </select>
           </div>
         </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-700">Fecha de Vencimiento</label>
-          <input type="date" name="fecha_vencimiento" class="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-300 focus:ring focus:ring-yellow-200 focus:ring-opacity-50">
+          <input type="date" name="fecha_vencimiento" min="<?php echo date('Y-m-d'); ?>" class="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-300 focus:ring focus:ring-yellow-200 focus:ring-opacity-50" required>
         </div>
       </form>
 
@@ -456,12 +520,15 @@ if (isset($_GET['logout'])) {
         <button onclick="closeEditModal()" class="px-4 border-[#6276B9] cursor-pointer font-medium text-[#6276B9] border-[2px] py-2 text-sm rounded-md hover:bg-[#6276B9] hover:text-white transition-colors">
           Cancelar
         </button>
-        <button onclick="guardarCambios()" class="px-4 py-2 text-white cursor-pointer font-medium hover:bg-[#4D5F98] text-sm bg-[#6276B9] rounded-md">
+        <button onclick="validarYGuardar()" class="px-4 py-2 text-white cursor-pointer font-medium hover:bg-[#4D5F98] text-sm bg-[#6276B9] rounded-md">
           Guardar Cambios
         </button>
       </div>
     </div>
   </div>
+
+
+
 </body>
 
 </html>
