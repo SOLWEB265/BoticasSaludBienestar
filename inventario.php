@@ -315,21 +315,19 @@ if ($result_proveedores->num_rows > 0) {
           <a href="inventario.php" class="hover:underline">INVENTARIO</a>
           <a href="productos.php" class="hover:underline">PRODUCTOS</a>
           <a href="reportes.php" class="hover:underline">REPORTES</a>
-         <!--  <a href="#" class="hover:underline">CONFIGURACION</a> -->
         </nav>
       </div>
       <div class="flex items-center gap-3 ">
         <a href="notificacion.php">
-          <button>
-            <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 ">
+          <button >
+            <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 transition-all duration-200 hover:scale-130 group-hover:brightness-75 ">
           </button>
         </a>
         <a href="interfaz.php">
-          <button>
-            <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
+          <button >
+            <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 transition-all duration-200 hover:scale-130 group-hover:brightness-75">
           </button>
-        </a>
-        <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
+        </a>        
         <div class="relative flex justify-center items-center">
           <button onclick="toggleLogoutMenu(event)">
             <img src="imagenes/Botica.png" class="w-10 cursor-pointer rounded-full" alt="Salir Icon">
