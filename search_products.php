@@ -18,7 +18,6 @@ if ($conn->connect_error) {
 
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Consulta con filtro de búsqueda
 $sql = "SELECT * FROM productos 
         WHERE producto LIKE '%$searchTerm%' 
            OR codigo LIKE '%$searchTerm%' 
@@ -33,7 +32,6 @@ if ($result->num_rows > 0) {
     }
 }
 
-// Calcular métricas
 $lowStock = array_filter($productos, function ($p) {
     return $p['stock'] < 10;
 });
@@ -41,7 +39,6 @@ $nearExpiry = array_filter($productos, function ($p) {
     return strtotime($p['fecha_vencimiento']) < strtotime('+30 days');
 });
 
-// Generar HTML de la tabla
 $tableHTML = '';
 foreach ($productos as $producto) {
     $stockClass = '';

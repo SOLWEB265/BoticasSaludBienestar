@@ -5,13 +5,11 @@ if (!isset($_SESSION['loggedin'])) {
     exit;
 }
 
-// Manejar el logout
 if (isset($_GET['logout'])) {
     session_destroy();
     header("Location: login.php");
     exit;
 }
-
 
 $servername = "localhost";
 $username = "root";
@@ -52,7 +50,7 @@ if (!empty($busqueda)) {
 
 $result = $conn->query($sql);
 
-//  obtener todos los proveedores únicos
+//  obtener todos los proveedores
 $sql_proveedores = "SELECT DISTINCT proveedor FROM productos ORDER BY proveedor";
 $result_proveedores = $conn->query($sql_proveedores);
 $proveedores = [];
@@ -287,7 +285,7 @@ if ($result_proveedores->num_rows > 0) {
     </script>
     <script>
         function toggleLogoutMenu(event) {
-            event.stopPropagation(); // Evita que el clic se propague al documento
+            event.stopPropagation(); 
             const menu = document.getElementById('logoutMenu');
             menu.classList.toggle('hidden');
         }
@@ -316,24 +314,22 @@ if ($result_proveedores->num_rows > 0) {
                     <a href="inventario.php" class="hover:underline">INVENTARIO</a>
                     <a href="productos.php" class="hover:underline">PRODUCTOS</a>
                     <a href="reportes.php" class="hover:underline">REPORTES</a>
-                    <!--  <a href="#" class="hover:underline">CONFIGURACION</a> -->
                 </nav>
             </div>
             <div class="flex items-center gap-3 ">
                 <a href="notificacion.php">
                     <button>
-                        <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 ">
+                        <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 transition-all duration-200 hover:scale-130 group-hover:brightness-75">
                     </button>
                 </a>
                 <a href="interfaz.php">
                     <button>
-                        <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
+                        <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 transition-all duration-200 hover:scale-130 group-hover:brightness-75">
                     </button>
                 </a>
-                <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
                 <div class="relative flex justify-center items-center">
                     <button onclick="toggleLogoutMenu(event)">
-                        <img src="imagenes/Botica.png" class="w-10 mt-2 cursor-pointer rounded-full" alt="Salir Icon">
+                        <img src="imagenes/Botica.png" class="w-10 cursor-pointer rounded-full" alt="Salir Icon">
                     </button>
                     <div id="logoutMenu" class="hidden absolute right-0 top-12 w-40 bg-white rounded-md shadow-lg z-10">
                         <a href="?logout=true" class="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100">Cerrar sesión</a>

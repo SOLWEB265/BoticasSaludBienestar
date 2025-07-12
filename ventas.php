@@ -11,7 +11,6 @@
     header("Location: login.php");
     exit;
   }
-
   ?>
 
   <!DOCTYPE html>
@@ -24,7 +23,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       function toggleLogoutMenu(event) {
-        event.stopPropagation(); // Evita que el clic se propague al documento
+        event.stopPropagation(); 
         const menu = document.getElementById('logoutMenu');
         menu.classList.toggle('hidden');
       }
@@ -41,7 +40,6 @@
       });
     </script>
   </head>
-
 
   <body class="bg-gradient-to-bl w-full from-[#505b96] to-[#1d2332] min-h-screen  flex flex-col  ">
     <div class="w-full flex flex-col items-end ">
@@ -137,5 +135,4 @@
       </div>
     </div>
   </body>
-
   </html>

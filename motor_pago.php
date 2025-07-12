@@ -21,7 +21,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
       function toggleLogoutMenu(event) {
-        event.stopPropagation(); // Evita que el clic se propague al documento
+        event.stopPropagation(); 
         const menu = document.getElementById('logoutMenu');
         menu.classList.toggle('hidden');
       }

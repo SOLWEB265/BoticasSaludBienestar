@@ -235,7 +235,6 @@ $conn->close();
   </div>
 
   <script>
-    // Espera 300ms después de que el usuario deja de escribir
     let searchTimeout;
     const searchInput = document.getElementById('searchInput');
 
@@ -276,7 +275,6 @@ $conn->close();
       searchInput.value = '';
       document.getElementById('searchFeedback').classList.add('hidden');
 
-      // Recargar los datos originales
       axios.get('search_products.php')
         .then(response => {
           document.getElementById('productTableBody').innerHTML = response.data.table;

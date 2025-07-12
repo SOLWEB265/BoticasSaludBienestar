@@ -41,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -69,5 +68,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 </body>
-
 </html>

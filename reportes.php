@@ -5,7 +5,7 @@ if (!isset($_SESSION['loggedin'])) {
   exit;
 }
 
-// Manejar el logout
+
 if (isset($_GET['logout'])) {
   session_destroy();
   header("Location: login.php");
@@ -16,14 +16,12 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "botica";
-
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
   die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Manejar la generación del reporte
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $reporte = $_POST['reporte'] ?? '';
   $fecha_desde = $_POST['fecha_desde'] ?? '';
@@ -31,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $proveedor = $_POST['proveedor'] ?? '';
 
   if ($reporte === 'Reporte de stock actual') {
-    // Construir la consulta SQL con filtros
     $sql = "SELECT codigo, producto, stock, precio, proveedor, fecha_vencimiento 
             FROM productos 
             WHERE 1=1";
@@ -48,12 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-      // Configurar headers para descarga de Excel
       header('Content-Type: application/vnd.ms-excel');
       header('Content-Disposition: attachment; filename="reporte_stock_actual.xls"');
       header('Cache-Control: max-age=0');
 
-      // Crear contenido del Excel
       echo "<table border='1'>";
       echo "<tr>
               <th>Código</th>
@@ -81,11 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $mensaje = "No se encontraron datos con los filtros seleccionados.";
     }
   } elseif ($reporte === 'Productos Vencidos') {
-    // Consulta para productos vencidos (fecha_vencimiento < fecha actual)
     $sql = "SELECT codigo, producto, stock, precio, proveedor, fecha_vencimiento 
             FROM productos 
             WHERE fecha_vencimiento < CURDATE()";
-
     if (!empty($proveedor)) {
       $sql .= " AND proveedor = '" . $conn->real_escape_string($proveedor) . "'";
     }
@@ -169,7 +162,6 @@ if ($result_proveedores->num_rows > 0) {
       event.stopPropagation();
     });
 
-    // Mostrar/ocultar filtros de fecha según el reporte seleccionado
     function toggleFechaFilters() {
       const reporte = document.getElementById('reporte').value;
       const fechaFilters = document.getElementById('fechaFilters');
@@ -181,8 +173,6 @@ if ($result_proveedores->num_rows > 0) {
       }
     }
 
-
-    // Ejecutar al cargar la página
     document.addEventListener('DOMContentLoaded', function() {
       toggleFechaFilters();
       document.getElementById('reporte').addEventListener('change', toggleFechaFilters);
@@ -199,21 +189,19 @@ if ($result_proveedores->num_rows > 0) {
           <a href="inventario.php" class="hover:underline">INVENTARIO</a>
           <a href="productos.php" class="hover:underline">PRODUCTOS</a>
           <a href="reportes.php" class="hover:underline underline">REPORTES</a>
-          <!--  <a href="#" class="hover:underline">CONFIGURACION</a> -->
         </nav>
       </div>
       <div class="flex items-center gap-3 ">
         <a href="notificacion.php">
           <button>
-            <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 ">
+            <img src="imagenes/Chat.png" alt="Chat" class="w-5 h-5 transition-all duration-200 hover:scale-130 group-hover:brightness-75">
           </button>
         </a>
         <a href="interfaz.php">
           <button>
-            <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
+            <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 transition-all duration-200 hover:scale-130 group-hover:brightness-75">
           </button>
         </a>
-        <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
         <div class="relative flex justify-center items-center">
           <button onclick="toggleLogoutMenu(event)">
             <img src="imagenes/Botica.png" class="w-10 cursor-pointer rounded-full" alt="Salir Icon">
@@ -254,7 +242,6 @@ if ($result_proveedores->num_rows > 0) {
               <input type="date" id="fecha_hasta" name="fecha_hasta" class="w-full border border-gray-300 rounded px-3 py-2" placeholder="Fecha fin">
             </div>
           </div>
-
           <div>
             <label for="proveedor" class="block text-sm font-medium">Proveedor</label>
             <select id="proveedor" name="proveedor" class="w-full border border-gray-300 rounded px-3 py-2">
@@ -265,7 +252,6 @@ if ($result_proveedores->num_rows > 0) {
               <?php endforeach; ?>
             </select>
           </div>
-
           <div class="flex justify-end gap-4 pt-4">
             <button type="reset" class="bg-[#6276B9] text-white px-6 py-2 rounded hover:bg-[#4d5f98]">CANCELAR</button>
             <button type="submit" class="bg-[#6276B9] text-white px-6 py-2 rounded hover:bg-[#4d5f98]">GENERAR REPORTE</button>
@@ -275,5 +261,4 @@ if ($result_proveedores->num_rows > 0) {
     </div>
   </main>
 </body>
-
 </html>

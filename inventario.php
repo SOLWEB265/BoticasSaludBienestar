@@ -38,7 +38,7 @@ if (!empty($busqueda)) {
 
 $result = $conn->query($sql);
 
-//  obtener todos los proveedores únicos
+//  obtener todos los proveedores
 $sql_proveedores = "SELECT DISTINCT proveedor FROM productos ORDER BY proveedor";
 $result_proveedores = $conn->query($sql_proveedores);
 $proveedores = [];
@@ -72,7 +72,7 @@ if (isset($_GET['logout'])) {
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script>
     function toggleLogoutMenu(event) {
-      event.stopPropagation(); // Evita que el clic se propague al documento
+      event.stopPropagation(); 
       const menu = document.getElementById('logoutMenu');
       menu.classList.toggle('hidden');
     }
@@ -387,10 +387,9 @@ if (isset($_GET['logout'])) {
         </a>
         <a href="interfaz.php">
           <button>
-            <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
+            <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 transition-all duration-200 hover:scale-130 group-hover:brightness-75 ">
           </button>
         </a>
-        <img src="imagenes/Herramienta.png" alt="Tools" class="w-5 h-5">
         <div class="relative flex justify-center items-center">
           <button onclick="toggleLogoutMenu(event)">
             <img src="imagenes/Botica.png" class="w-10 cursor-pointer rounded-full" alt="Salir Icon">
@@ -526,9 +525,5 @@ if (isset($_GET['logout'])) {
       </div>
     </div>
   </div>
-
-
-
 </body>
-
 </html>

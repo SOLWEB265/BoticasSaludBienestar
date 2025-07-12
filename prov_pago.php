@@ -10,9 +10,7 @@ if (isset($_GET['logout'])) {
   header("Location: login.php");
   exit;
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -37,7 +35,7 @@ if (isset($_GET['logout'])) {
 
   <script>
     function toggleLogoutMenu(event) {
-      event.stopPropagation(); // Evita que el clic se propague al documento
+      event.stopPropagation(); 
       const menu = document.getElementById('logoutMenu');
       menu.classList.toggle('hidden');
     }
@@ -142,8 +140,6 @@ if (isset($_GET['logout'])) {
             </div>
           </div>
         </div>
-
-        <!-- Botones -->
         <!-- Botones -->
         <div class="flex justify-end space-x-3 pt-4">
           <button type="button" onclick="limpiarFormulario()" class="px-4 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded-md hover:bg-gray-300">CANCELAR</button>

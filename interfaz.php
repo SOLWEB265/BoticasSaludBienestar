@@ -32,15 +32,10 @@ if (isset($_GET['logout'])) {
     <div class="flex justify-center items-center gap-3 p-4">
       <a href="notificacion.php">
         <button>
-          <img src="imagenes/Chat.png" class="w-6 h-6" alt="Chat Icon">
+          <img src="imagenes/Chat.png" class="w-6 h-6 transition-all duration-200 hover:scale-130 group-hover:brightness-75" alt="Chat Icon">
         </button>
       </a>
-
-      <button>
-        <img src="imagenes/Herramienta.png" class="w-6 h-6" alt="Herramienta Icon">
-      </button>
       <span class="text-lg font-medium">Botica salud y bienestar</span>
-
       <div class="relative">
         <button onclick="toggleLogoutMenu()">
           <img src="imagenes/User.jpg" class="w-6 h-6 cursor-pointer rounded-full" alt="Salir Icon">
