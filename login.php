@@ -66,7 +66,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
         <button type="submit" class="w-full p-3 bg-[#5a82e8] text-white font-bold rounded hover:bg-[#4069c4]">INICIAR SESIÓN</button>
       </form>
-      <p class="mt-3 text-sm text-gray-600">¿Has olvidado tu contraseña?</p>
     </div>
   </div>
 </body>
