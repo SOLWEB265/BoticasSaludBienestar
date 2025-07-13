@@ -1,61 +1,63 @@
-  <?php
+<?php
 
-  session_start();
-  if (!isset($_SESSION['loggedin'])) {
-    header("Location: login.php");
-    exit;
-  }
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+  header("Location: login.php");
+  exit;
+}
 
-  if (isset($_GET['logout'])) {
-    session_destroy();
-    header("Location: login.php");
-    exit;
-  }
+if (isset($_GET['logout'])) {
+  session_destroy();
+  header("Location: login.php");
+  exit;
+}
 
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario Factura</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-      function toggleLogoutMenu(event) {
-        event.stopPropagation();
-        const menu = document.getElementById('logoutMenu');
-        menu.classList.toggle('hidden');
+    function toggleLogoutMenu(event) {
+      event.stopPropagation();
+      const menu = document.getElementById('logoutMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', function() {
+      const menu = document.getElementById('logoutMenu');
+      if (!menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
       }
+    });
 
-      document.addEventListener('click', function() {
-        const menu = document.getElementById('logoutMenu');
-        if (!menu.classList.contains('hidden')) {
-          menu.classList.add('hidden');
-        }
-      });
-
-      document.getElementById('logoutMenu').addEventListener('click', function(event) {
-        event.stopPropagation();
-      });
-    </script>
+    document.getElementById('logoutMenu').addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+  </script>
 </head>
+
 <body class="bg-gradient-to-bl from-[#505b96] to-[#1d2332] min-h-screen flex flex-col">
-<div class="w-full flex flex-col items-end ">
-    <div class="flex justify-center items-center gap-3 p-4">      
+  <div class="w-full flex flex-col items-end ">
+    <div class="flex justify-center items-center gap-3 p-4">
       <a href="interfaz.php" class="flex justify-center pr-2 items-center">
-          <button>
-            <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
-          </button>
-        </a>
+        <button>
+          <img src="imagenes/Retroceder.png" alt="Retroceder" class="w-5 h-5 ">
+        </button>
+      </a>
       <span class="text-lg font-medium text-white">Botica salud y bienestar</span>
       <div class="relative flex justify-center items-center">
-          <button onclick="toggleLogoutMenu(event)">
-            <img src="imagenes/User.jpg" class="w-6 h-6 cursor-pointer rounded-full" alt="Salir Icon">
-          </button>
-          <div id="logoutMenu" class="hidden absolute right-0 top-8 w-40 bg-white rounded-md shadow-lg z-10">
-            <a href="?logout=true" class="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100">Cerrar sesión</a>
-          </div>
+        <button onclick="toggleLogoutMenu(event)">
+          <img src="imagenes/User.jpg" class="w-6 h-6 cursor-pointer rounded-full" alt="Salir Icon">
+        </button>
+        <div id="logoutMenu" class="hidden absolute right-0 top-8 w-40 bg-white rounded-md shadow-lg z-10">
+          <a href="?logout=true" class="block px-4 py-2 rounded-md text-gray-800 hover:bg-gray-100">Cerrar sesión</a>
         </div>
+      </div>
     </div>
   </div>
 
@@ -92,7 +94,7 @@
             </div>
           </div>
         </div>
-    
+
         <!-- Productos -->
         <div>
           <h3 class="text-indigo-600 font-semibold text-sm mb-2">Productos / Servicios</h3>
@@ -132,7 +134,7 @@
               </tr>
             </tbody>
           </table>
-    
+
           <!-- Totales -->
           <div class="text-right mt-4 space-y-1">
             <p class="text-sm">Subtotal: <span class="ml-2">S/ 85.00</span></p>
@@ -140,13 +142,13 @@
             <p class="text-sm font-semibold text-indigo-700">TOTAL: <span class="ml-2 font-bold">S/ 100.30</span></p>
           </div>
         </div>
-    
+
         <!-- Observaciones -->
         <div>
           <h3 class="text-sm font-medium mb-1">Observaciones</h3>
           <textarea class="w-full border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring focus:ring-indigo-300" placeholder="Observaciones adicionales (opcional)"></textarea>
         </div>
-    
+
         <!-- Botones -->
         <div class="flex justify-end gap-4 pt-4">
           <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 text-sm font-medium rounded-md hover:bg-gray-300">CANCELAR</button>
@@ -157,4 +159,5 @@
     </div>
   </div>
 </body>
+
 </html>

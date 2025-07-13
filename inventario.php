@@ -401,7 +401,7 @@ if (isset($_GET['logout'])) {
       </div>
     </header>
     <div class="flex gap-6 mb-4 pt-6 pl-20 ">
-      <a href="registro.php"><button href="registro.html" class="bg-yellow-200 cursor-pointer hover:bg-yellow-300 px-4 py-2 rounded text-sm">Agregar</button></a>
+      <a href="/BoticasSaludBienestar/registro.php"><button href="registro.html" class="bg-yellow-200 cursor-pointer hover:bg-yellow-300 px-4 py-2 rounded text-sm">Agregar</button></a>
       <button id="btnEditar" onclick="openEditModal()" class="bg-yellow-200 hover:bg-yellow-300 px-4 py-2 rounded text-sm">Editar</button> <button onclick="eliminarProductos()" class="bg-yellow-200 hover:bg-yellow-300 px-4 py-2 rounded cursor-pointer text-sm">Eliminar</button>
     </div>
     <div class="border-b-[3px]">

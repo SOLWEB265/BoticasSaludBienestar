@@ -114,16 +114,16 @@ $conn->close();
       <h2 class="text-center mt-2 text-xl font-bold">BOTICA SALUD</h2>
     </div>
     <ul class="space-y-2">
-      <a class="cursor-pointer" href="/productos.php">
+      <a class="cursor-pointer" href="/BoticasSaludBienestar/productos.php">
         <li class="p-2 hover:bg-[#505b96] rounded cursor-pointer">Productos</li>
       </a>
-      <a class="cursor-pointer" href="/ventas.php">
+      <a class="cursor-pointer" href="/BoticasSaludBienestar/ventas.php">
         <li class="p-2 hover:bg-[#505b96] rounded cursor-pointer">Ventas</li>
       </a>
-      <a class="cursor-pointer" href="/inventario.php">
+      <a class="cursor-pointer" href="/BoticasSaludBienestar/inventario.php">
         <li class="p-2 hover:bg-[#505b96] rounded cursor-pointer">Inventario</li>
       </a>
-      <a class="cursor-pointer" href="/reportes.php">
+      <a class="cursor-pointer" href="/BoticasSaludBienestar/reportes.php">
         <li class="p-2 hover:bg-[#505b96] rounded cursor-pointer">Reportes</li>
       </a>
     </ul>
