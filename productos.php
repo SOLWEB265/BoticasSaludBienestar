@@ -12,9 +12,9 @@ if (isset($_GET['logout'])) {
 }
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "botica";
+$username = "fuentesodamichel_boticassaludbienestar";
+$password = "proyectobotica";
+$dbname = "fuentesodamichel_boticassaludbienestar";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -285,7 +285,7 @@ if ($result_proveedores->num_rows > 0) {
     </script>
     <script>
         function toggleLogoutMenu(event) {
-            event.stopPropagation(); 
+            event.stopPropagation();
             const menu = document.getElementById('logoutMenu');
             menu.classList.toggle('hidden');
         }

@@ -11,9 +11,9 @@
 <body class="flex items-center justify-center min-h-screen bg-gradient-to-bl from-[#505b96] to-[#1d2332]">
   <?php
   $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "botica";
+  $username = "fuentesodamichel_boticassaludbienestar";
+  $password = "proyectobotica";
+  $dbname = "fuentesodamichel_boticassaludbienestar";
 
   $conn = new mysqli($servername, $username, $password, $dbname);
 

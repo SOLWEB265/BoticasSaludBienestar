@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "botica";
+$username = "fuentesodamichel_boticassaludbienestar";
+$password = "proyectobotica";
+$dbname = "fuentesodamichel_boticassaludbienestar";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -72,7 +72,7 @@ if (isset($_GET['logout'])) {
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script>
     function toggleLogoutMenu(event) {
-      event.stopPropagation(); 
+      event.stopPropagation();
       const menu = document.getElementById('logoutMenu');
       menu.classList.toggle('hidden');
     }
@@ -526,4 +526,5 @@ if (isset($_GET['logout'])) {
     </div>
   </div>
 </body>
+
 </html>

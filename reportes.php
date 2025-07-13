@@ -13,9 +13,9 @@ if (isset($_GET['logout'])) {
 }
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "botica";
+$username = "fuentesodamichel_boticassaludbienestar";
+$password = "proyectobotica";
+$dbname = "fuentesodamichel_boticassaludbienestar";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
@@ -261,4 +261,5 @@ if ($result_proveedores->num_rows > 0) {
     </div>
   </main>
 </body>
+
 </html>

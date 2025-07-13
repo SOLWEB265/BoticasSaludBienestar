@@ -7,9 +7,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $contrasena = $_POST['contrasena'];
 
   $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "botica";
+  $username = "fuentesodamichel_boticassaludbienestar";
+  $password = "proyectobotica";
+  $dbname = "fuentesodamichel_boticassaludbienestar";
 
   $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -26,11 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     if ($contrasena === $row['contrasena']) {
-    $_SESSION['loggedin'] = true;
-    $_SESSION['user_id'] = $row['id'];
-    $_SESSION['user_name'] = $row['nombre'];
-    header("Location: interfaz.php");
-    exit();
+      $_SESSION['loggedin'] = true;
+      $_SESSION['user_id'] = $row['id'];
+      $_SESSION['user_name'] = $row['nombre'];
+      header("Location: interfaz.php");
+      exit();
     } else {
       $error = "Contraseña incorrecta.";
     }
@@ -68,4 +68,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 </body>
+
 </html>

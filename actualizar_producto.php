@@ -2,9 +2,9 @@
 header('Content-Type: application/json');
 
 $servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "botica";
+$username = "fuentesodamichel_boticassaludbienestar";
+$password = "proyectobotica";
+$dbname = "fuentesodamichel_boticassaludbienestar";
 
 $data = json_decode(file_get_contents('php://input'), true);
 

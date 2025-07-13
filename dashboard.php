@@ -8,9 +8,9 @@ if (!isset($_SESSION['loggedin'])) {
 
 // Conexión a la base de datos
 $servername = "localhost";
-$username = "root";  // Usuario por defecto de XAMPP
-$password = "";      // Contraseña por defecto (vacía)
-$dbname = "botica";
+$username = "fuentesodamichel_boticassaludbienestar";  // Usuario por defecto de XAMPP
+$password = "proyectobotica";      // Contraseña por defecto (vacía)
+$dbname = "fuentesodamichel_boticassaludbienestar";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
